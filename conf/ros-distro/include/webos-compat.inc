@@ -179,6 +179,9 @@ IMAGE_INSTALL_append_rpi = " kernel-modules"
 # otherwise e.g. vboxguest needed by qemux86 webos-images isn't enabled and do_rootfs fails
 PREFERRED_VERSION_linux-yocto = "4.18%"
 
+# Override unconditional assignment in webos_filesystem_paths.bbclass .
+webos_optdir_forcevariable = "${@bb.utils.contains('DISTRO_FEATURES', 'usrmerge', d.getVar('prefix', True), d.getVar('base_prefix', True), d)}/opt"
+
 # Undo blacklisting
 PNBLACKLIST[libfreenect] ?= ""
 PNBLACKLIST[freenect-camera] ?= ""
