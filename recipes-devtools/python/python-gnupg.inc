@@ -14,9 +14,3 @@ DEPENDS += "gnupg"
 PYPI_PACKAGE = "python-gnupg"
 
 inherit pypi
-
-X_RDEPENDS_${PN} += "\
-    ${PYTHON_PN}-datetime \
-    ${PYTHON_PN}-pickle \
-    ${PYTHON_PN}-threading \
-    "
