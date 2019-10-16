@@ -38,18 +38,18 @@ DEVICE_MASTER_URI=""
 # Things to be done only upon first boot.
 do_firstboot_actions()
 {
-	# Set the hostname.
-	hostnamectl set-hostname $DEVICE_HOSTNAME
+    # Set the hostname.
+    hostnamectl set-hostname $DEVICE_HOSTNAME
 
-	# Set up WiFi.
-	luna-send -n 1 -f luna://com.webos.service.wifi/setstate '{"state": "enabled" }'
-	# Empirically determined:
-	sleep 3
-	luna-send -n 1 -f luna://com.webos.service.wifi/connect '{"ssid": "'$DEVICE_WIFI_SSID'", "security": {"securityType": "psk", "simpleSecurity": {"passKey": "'$DEVICE_WIFI_PASSWORD'"} } }'
+    # Set up WiFi.
+    luna-send -n 1 -f luna://com.webos.service.wifi/setstate '{"state": "enabled" }'
+    # Empirically determined:
+    sleep 10
+    luna-send -n 1 -f luna://com.webos.service.wifi/connect '{"ssid": "'$DEVICE_WIFI_SSID'", "security": {"securityType": "psk", "simpleSecurity": {"passKey": "'$DEVICE_WIFI_PASSWORD'"} } }'
 
-	# Add setting up the ROS workspace to $HOME/.profile .
-	[ -w $HOME/.profile ] && sed -i -e '/^# WEBOS-DEVICE-CONFIG-BEGIN/,/^# WEBOS-DEVICE-CONFIG-END/ d' $HOME/.profile
-	cat <<! >> $HOME/.profile
+    # Add setting up the ROS workspace to $HOME/.profile .
+    [ -w $HOME/.profile ] && sed -i -e '/^# WEBOS-DEVICE-CONFIG-BEGIN/,/^# WEBOS-DEVICE-CONFIG-END/ d' $HOME/.profile
+    cat <<! >> $HOME/.profile
 # WEBOS-DEVICE-CONFIG-BEGIN
 $DEVICE_SET_MODEL
 
@@ -65,6 +65,7 @@ else
     # in IMAGE_FEATURES).
     [ -z "\$ROS_VERSION" ] && source ros_setup.sh || true
 fi
+
 # WEBOS-DEVICE-CONFIG-END
 !
 }
