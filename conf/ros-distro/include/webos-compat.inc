@@ -57,7 +57,6 @@ ConditionPathIsDirectory=!$not_firstboot_sentinel_dir
 [Service]
 Type=oneshot
 ExecStart=$systemd_system_scripts_dir/webos-device-config-invoke.sh ${WEBOS_DEVICE_CONFIG_MOUNTPOINT}/${DISTRO}-device-config ${WEBOS_DEVICE_CONFIG_COPIED_RC_LOCAL}
-ExecCondition=/bin/mkdir -p $not_firstboot_sentinel_dir
 # This has the fortunate side-effects of preventing a re-insertion from invoking it again and allowing rc-local.service to detect
 # that is has been run:
 RemainAfterExit=yes
